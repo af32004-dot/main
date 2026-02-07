@@ -1,4 +1,4 @@
-require('dotenv').config()
+/*require('dotenv').config()*/
 const express = require('express')
 const morgan = require('morgan')
 const Note = require('./models/nte')
@@ -142,5 +142,6 @@ const errorHandler = (error, request, response, next) => {
 
   next(error)
 }
+
 
 app.use(errorHandler)
