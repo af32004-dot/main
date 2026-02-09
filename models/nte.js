@@ -4,7 +4,7 @@ mongoose.set('strictQuery', false)
 
 const url = process.env.MONGODB_URI
 
-console.log('connecting to', url)
+/*console.log('connecting to', url)*/
 mongoose.connect(url, { family: 4 })
   .then(result => {
     console.log('connected to MongoDB')
@@ -14,8 +14,16 @@ mongoose.connect(url, { family: 4 })
   })
 
 const noteSchema = new mongoose.Schema({
-  name: String,
-  num: String,
+   name: {
+    type: String,
+    minLength: 3,
+    required: true
+  },
+  num: {
+    type: String,
+    minLength: 5,
+    required: true
+	},
 })
 
 noteSchema.set('toJSON', {
