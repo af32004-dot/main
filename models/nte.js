@@ -21,9 +21,13 @@ const noteSchema = new mongoose.Schema({
   },
   num: {
     type: String,
-    minLength: 5,
-    required: true
-	},
+    minLength: 8,
+    required: true,
+validate: {    
+validator: function(v) {
+        return /\d{3}-\d{5}/||/\d{2}-\d{5}/.test(v);
+	}}
+  }
 })
 
 noteSchema.set('toJSON', {
