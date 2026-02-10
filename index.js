@@ -1,4 +1,4 @@
-/*require('dotenv').config()*/
+require('dotenv').config()
 const express = require('express')
 /*const morgan = require('morgan')*/
 const Note = require('./models/nte')
@@ -36,24 +36,24 @@ app.use(requestLogger)
 app.post('/api/notes', (request, response,next) => {
   const body = request.body
 
-/*
+  /*
   if (!body.name) {
-    return response.status(400).json({ 
-      error: 'name missing' 
+    return response.status(400).json({
+      error: 'name missing'
     })
   }
 
   if (!body.num) {
-    return response.status(400).json({ 
-      error: 'number missing' 
+    return response.status(400).json({
+      error: 'number missing'
     })
   }
 */
-/*
+  /*
 console.log ('find',body.name,'find2', Note.find({}).then(notes => {    response.json(notes)  }))
   if (Note.find(body.name).length!==0) {
-    return response.status(400).json({ 
-      error: 'nome già presente' 
+    return response.status(400).json({
+      error: 'nome già presente'
     })
   }
 */
@@ -75,6 +75,8 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
 
+const notes = []
+
 app.get('/info', (request, response) => {
   response.send('<p>ci sono '+ notes.length + ' persone</p><p>' + Date() + '</p>')
 })
@@ -87,14 +89,14 @@ app.get('/api/notes', (request, response) => {
 
 app.get('/api/notes/:id', (request, response, next) => {
   Note.findById(request.params.id).then(note => {
-	if(note) {
-    response.json(note)
-        } else {
-  	response.status(404).end()
-        }
+    if(note) {
+      response.json(note)
+    } else {
+      response.status(404).end()
+    }
   })
-.catch(error => next(error))
-   
+    .catch(error => next(error))
+
 })
 
 app.put('/api/notes/:id', (request, response, next) => {
@@ -119,6 +121,7 @@ app.put('/api/notes/:id', (request, response, next) => {
 app.delete('/api/notes/:id', (request, response, next) => {
   Note.findByIdAndDelete(request.params.id)
     .then(result => {
+      console.log (result)
       response.status(204).end()
     })
     .catch(error => next(error))
@@ -141,13 +144,12 @@ const errorHandler = (error, request, response, next) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' }) 
+    return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
   }
 
   next(error)
 }
-
 
 app.use(errorHandler)
