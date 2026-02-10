@@ -23,10 +23,31 @@ const noteSchema = new mongoose.Schema({
     type: String,
     minLength: 8,
     required: true,
-validate: {    
-validator: function(v) {
-        return /\d{3}-\d{5}/||/\d{2}-\d{5}/.test(v);
-	}}
+
+validate: (value)=>{    
+if( 
+(
+Number.isInteger(Number(value.substring(0,3)))
+&&
+value.substring(3,4)==='-'
+&&
+Number.isInteger(Number(value.substring(4,value.length)))
+) ||
+(
+Number.isInteger(Number(value.substring(0,2)))
+&&
+value.substring(2,3)==='-'
+&&
+Number.isInteger(Number(value.substring(3,value.length)))
+)
+
+){return true} else
+{return false}
+
+				/*}*/
+	}	
+/**/
+
   }
 })
 
