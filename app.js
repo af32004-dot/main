@@ -49,8 +49,8 @@ const requestLogger = (request, response, next) => {
 app.use(requestLogger)
 /**/
 
-app.use("/bloglist/", express.static(__dirname + '\\dist'))/**/
-app.use(express.static(__dirname + '\\dist'))/**/
+app.use("/bloglist/", express.static('dist'))/**/
+app.use(express.static('dist'))/**/
 
 app.use(express.json())
 app.use(middleware.requestLogger) 
@@ -63,5 +63,6 @@ app.use('/bloglist/api/login', loginRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
+
 
 module.exports = app
