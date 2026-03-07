@@ -1,1 +1,0 @@
-é il file stati
